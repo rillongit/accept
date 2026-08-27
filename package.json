@@ -1,5 +1,5 @@
 {
-  "name": "@rill/accept",
+  "name": "@userill/accept",
   "version": "0.1.0",
   "private": false,
   "description": "Rill Accept kit, paywall middleware and receipt verification",

@@ -1,4 +1,4 @@
-# @rill/accept
+# @userill/accept
 
 Paywall helpers and receipt verification for Rill Accept.
 
@@ -9,14 +9,14 @@ Docs: [userill.com/docs/accept](https://userill.com/docs/accept)
 ## Install
 
 ```bash
-npm i @rill/accept
+npm i @userill/accept
 ```
 
 ## Usage
 
 ```ts
 import express from "express";
-import { rillPaywallExpress, createVerifyReceipt } from "@rill/accept";
+import { rillPaywallExpress, createVerifyReceipt } from "@userill/accept";
 
 const app = express();
 const verifyReceipt = createVerifyReceipt("https://api.userill.com");
