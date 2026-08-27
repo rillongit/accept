@@ -43,6 +43,8 @@ Example app: [rillongit/accept-echo](https://github.com/rillongit/accept-echo)
 
 ## Publish
 
+Create the `@rill` org on npm (once), then:
+
 ```bash
 pnpm test:unit && pnpm publish --access public
 ```
