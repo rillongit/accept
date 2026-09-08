@@ -2,7 +2,7 @@
 
 Paywall helpers and receipt verification for Rill Accept.
 
-The hosted gate at `/r/{id}` needs no SDK. Use this kit when you want to protect a route in your own app and verify `X-Rill-Receipt` against `POST /access/verify`. Prefer a `payment.succeeded` webhook for fulfillment.
+The hosted gate at `/r/{id}` needs no SDK. Use this kit when you want to protect a route in your own app and verify `X-Rill-Receipt` against `POST /access/verify`. Prefer a `payment.succeeded` webhook for fulfillment. Verify deliveries with `verifyWebhookSignature` (HMAC-SHA256 of `{X-Rill-Webhook-Id}.{X-Rill-Timestamp}.{raw body}`, header `X-Rill-Signature: v1,<hex>`, 300s window). Do not re-serialize the JSON before verify.
 
 Docs: [userill.com/docs/accept](https://userill.com/docs/accept)
 
@@ -38,6 +38,31 @@ app.get(
 ```
 
 Unpaid requests get `402` with `payment_terms` (`gate_url`, `spend_pay_url`, `receipt_header`). A valid receipt unlocks the handler.
+
+```ts
+import {
+  verifyWebhookSignature,
+  RILL_WEBHOOK_ID_HEADER,
+  RILL_WEBHOOK_TIMESTAMP_HEADER,
+  RILL_WEBHOOK_SIGNATURE_HEADER,
+} from "@userill/accept";
+
+app.post("/webhooks", express.raw({ type: "application/json" }), (req, res) => {
+  const rawBody = req.body.toString("utf8");
+  const ok = verifyWebhookSignature(
+    process.env.RILL_WEBHOOK_SECRET ?? "",
+    String(req.header(RILL_WEBHOOK_ID_HEADER) ?? ""),
+    String(req.header(RILL_WEBHOOK_TIMESTAMP_HEADER) ?? ""),
+    rawBody,
+    String(req.header(RILL_WEBHOOK_SIGNATURE_HEADER) ?? ""),
+  );
+  if (!ok) {
+    res.status(401).json({ ok: false });
+    return;
+  }
+  res.json({ ok: true });
+});
+```
 
 Example app: [rillongit/accept-echo](https://github.com/rillongit/accept-echo)
 
