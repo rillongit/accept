@@ -1,7 +1,4 @@
-import {
-  enforceRillPaywall,
-  type RillPaywallOptions,
-} from "./middleware.js";
+import { enforceRillPaywall, type RillPaywallOptions } from "./middleware.js";
 import { createVerifyReceipt } from "./verify.js";
 
 export type RillPaywallConfig = {

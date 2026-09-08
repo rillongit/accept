@@ -1,7 +1,4 @@
-import {
-  enforceRillPaywall,
-  type RillPaywallOptions,
-} from "./middleware.js";
+import { enforceRillPaywall, type RillPaywallOptions } from "./middleware.js";
 
 type ExpressLikeReq = {
   headers: Record<string, string | string[] | undefined>;

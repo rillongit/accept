@@ -10,11 +10,12 @@ describe("createVerifyReceipt", () => {
   it("returns true when API reports valid", async () => {
     vi.stubGlobal(
       "fetch",
-      vi.fn(async () =>
-        new Response(JSON.stringify({ valid: true }), {
-          status: 200,
-          headers: { "Content-Type": "application/json" },
-        }),
+      vi.fn(
+        async () =>
+          new Response(JSON.stringify({ valid: true }), {
+            status: 200,
+            headers: { "Content-Type": "application/json" },
+          }),
       ),
     );
 

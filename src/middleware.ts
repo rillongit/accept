@@ -36,7 +36,10 @@ export async function enforceRillPaywall(
   options: RillPaywallOptions,
 ): Promise<
   | { status: 402; body: ReturnType<typeof paymentRequiredBody> }
-  | { status: 403; body: { ok: false; error: { code: string; message: string } } }
+  | {
+      status: 403;
+      body: { ok: false; error: { code: string; message: string } };
+    }
   | null
 > {
   const terms: RillPaymentTerms = buildPaymentTerms({
